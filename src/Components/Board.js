@@ -23,9 +23,31 @@ class Board extends React.Component {
     );
   }
 
+  // Function for board creation (3 x 3 squares)
+  createBoard = () => {
+    let board = [];
+    let index = 0;
+
+    // Outer loop to create parent (rows)
+    for (let i = 0; i < 3; i++) {
+      let children = [];
+      // inner loop to create children (columns)
+      for (let j = 0; j < 3; j++) {
+        children.push(this.renderSquare(index++));
+      }
+      // create parent and add the children
+      board.push(<div className="board-row">{ children }</div>)
+    }
+    return board;
+  }
+  
   render() {
+
     return(
       <div>
+        { this.createBoard() }
+
+{/*
         <div className="board-row">
           { this.renderSquare(0) }
           { this.renderSquare(1) }
@@ -41,6 +63,7 @@ class Board extends React.Component {
           { this.renderSquare(7) }
           { this.renderSquare(8) }
         </div>
+*/}
       </div>
     );
   }
