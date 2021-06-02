@@ -28,6 +28,10 @@ class Board extends React.Component {
     // Slice - create a copy of the array to modify instead of modifying
     // the existing array.
     const squares = this.state.squares.slice();
+    // Ignore a click if someone has won the game or if Square is already clicked.
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     // Store the state in the Board component instead of the individual 
     // Square components. When the Board's state changes, the Square components
