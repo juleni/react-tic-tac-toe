@@ -21,8 +21,37 @@ class Board extends React.Component {
     };
   }
 
+  // function that handles onClick event when Square is clicked on
+  handleClick(i) {
+    // Slice - create a copy of the array to modify instead of modifying
+    // the existing array.
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    // Store the state in the Board component instead of the individual 
+    // Square components. When the Board's state changes, the Square components
+    // re-render automatically. Keeping the state in the Board component will
+    // allow it to determine the winner in the future.
+
+    // The Square components are CONTROLLED COMPONENTS. The Board component 
+    // has full control over them.
+    this.setState({squares: squares});
+  }
+
   renderSquare(i) {
-    return <Square value={ this.state.squares[i] } />;
+    return (
+      <Square 
+        value={ this.state.squares[i] } 
+        // Create a way for the Square to update Board's state. Since state is
+        // considered to be private to a component that defines it, we cannot
+        // update the Board's state directly from Square. Instead, we'll pass
+        // down a function from the Board to the Square, and we'll have Square
+        // call that function when a square is clicked.
+
+        // In React, it's conventional to use handle[Event] names for methods
+        // which handle the events.
+        onClick={ () => this.handleClick(i) }
+      />
+    );
   }
 
   render() {

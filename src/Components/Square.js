@@ -3,17 +3,8 @@ import React from 'react';
 import "../Square.css";
 
 class Square extends React.Component {
-  constructor(props) {
-    // Allways call "super" when defining the constructor of a subclass.
-    // All React components classes that have constructor should start 
-    // with a super(props) call.
-    super(props);
-    // initialize the state
-    this.state = {
-      value: null,
-    };
-  }
-
+  // Constructor is not here becouse Square component no longer 
+  // keeps track of the game's state.
   render () {
     return(
       // Set state value to X when clicked on the square.
@@ -21,9 +12,16 @@ class Square extends React.Component {
       // the child components inside of it too.
       <button 
         className="square" 
-        onClick={() => this.setState({value: 'X'})}
+        // Props 'value' and 'onClick' are passing down from Board component.
+        // When a Square is clicked, the onClick function provided by Board 
+        // is called. Since the Board passed onClick={() => this.handleClick(i)}
+        // to Square, the Square calls this.handleClick(i) when clicked.
+
+        // In React, it's conventional to use on[Event] names for methods which
+        // represent events.        
+        onClick={() => this.props.onClick()}
       >
-        { this.state.value }
+        { this.props.value }
       </button>
     );
   }
