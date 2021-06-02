@@ -3,8 +3,26 @@ import "../Board.css";
 import Square from './Square';
 
 class Board extends React.Component {
+  constructor(props) {
+    // Allways call "super" when defining the constructor of a subclass.
+    // All React components classes that have constructor should start 
+    // with a super(props) call.
+    super(props);
+    this.state = {
+      // Board's initial state to contain an array of all squares
+      // When we fill the board in later, the this.state.squares array
+      // will look something like this:
+      // [
+      //  'O', null, 'X' 
+      //  'X', X, 'O' 
+      //  'O', null, null 
+      // ]
+      squares: Array(9).fill(null),
+    };
+  }
+
   renderSquare(i) {
-    return <Square value={ i } />;
+    return <Square value={ this.state.squares[i] } />;
   }
 
   render() {
