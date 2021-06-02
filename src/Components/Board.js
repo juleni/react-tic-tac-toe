@@ -3,53 +3,13 @@ import "../Board.css";
 import Square from './Square';
 
 class Board extends React.Component {
-  constructor(props) {
-    // Allways call "super" when defining the constructor of a subclass.
-    // All React components classes that have constructor should start 
-    // with a super(props) call.
-    super(props);
-    this.state = {
-      // Board's initial state to contain an array of all squares
-      // When we fill the board in later, the this.state.squares array
-      // will look something like this:
-      // [
-      //  'O', null, 'X' 
-      //  'X', X, 'O' 
-      //  'O', null, null 
-      // ]
-      squares: Array(9).fill(null),
-      // flag for next turn of the 'X' player
-      xIsNext: true,
-    };
-  }
-
-  // function that handles onClick event when Square is clicked on
-  handleClick(i) {
-    // Slice - create a copy of the array to modify instead of modifying
-    // the existing array.
-    const squares = this.state.squares.slice();
-    // Ignore a click if someone has won the game or if Square is already clicked.
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    // Store the state in the Board component instead of the individual 
-    // Square components. When the Board's state changes, the Square components
-    // re-render automatically. Keeping the state in the Board component will
-    // allow it to determine the winner in the future.
-
-    // The Square components are CONTROLLED COMPONENTS. The Board component 
-    // has full control over them.
-    this.setState({
-      squares: squares,
-      xIsNext: !this.state.xIsNext,
-    });
-  }
+  // Constructor is not here becouse Square component no longer 
+  // keeps track of the game's state.
 
   renderSquare(i) {
     return (
       <Square 
-        value={ this.state.squares[i] } 
+        value={ this.props.squares[i] } 
         // Create a way for the Square to update Board's state. Since state is
         // considered to be private to a component that defines it, we cannot
         // update the Board's state directly from Square. Instead, we'll pass
@@ -58,23 +18,14 @@ class Board extends React.Component {
 
         // In React, it's conventional to use handle[Event] names for methods
         // which handle the events.
-        onClick={ () => this.handleClick(i) }
+        onClick={ () => this.props.onClick(i) }
       />
     );
   }
 
   render() {
-    const winner = calculateWinner(this.state.squares);
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
     return(
       <div>
-        <div className="status">{ status }</div>
         <div className="board-row">
           { this.renderSquare(0) }
           { this.renderSquare(1) }
@@ -93,28 +44,6 @@ class Board extends React.Component {
       </div>
     );
   }
-}
-
-// Helper function checking if there is a winner. Called from Board's render.
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (let i=0; i<lines.length; i++) {
-    const [a,b,c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
 }
 
 export default Board;
