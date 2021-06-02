@@ -18,6 +18,8 @@ class Board extends React.Component {
       //  'O', null, null 
       // ]
       squares: Array(9).fill(null),
+      // flag for next turn of the 'X' player
+      xIsNext: true,
     };
   }
 
@@ -26,7 +28,7 @@ class Board extends React.Component {
     // Slice - create a copy of the array to modify instead of modifying
     // the existing array.
     const squares = this.state.squares.slice();
-    squares[i] = 'X';
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
     // Store the state in the Board component instead of the individual 
     // Square components. When the Board's state changes, the Square components
     // re-render automatically. Keeping the state in the Board component will
@@ -34,7 +36,10 @@ class Board extends React.Component {
 
     // The Square components are CONTROLLED COMPONENTS. The Board component 
     // has full control over them.
-    this.setState({squares: squares});
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext,
+    });
   }
 
   renderSquare(i) {
