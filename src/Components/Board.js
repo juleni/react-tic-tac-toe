@@ -12,7 +12,6 @@ class Board extends React.Component {
     if (arrSelected && arrSelected.some(item => item === currSquare)) {
       clName = "square-selected";
     }
-    console.log("arrSelected = " + arrSelected + " clName = " + clName);
     return clName;
   }
 
