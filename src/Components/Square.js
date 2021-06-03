@@ -14,7 +14,7 @@ function Square(props) {
     // Calling setStare in a component, React automatically updates
     // the child components inside of it too.
       <button
-        className="square"
+        className={props.clName}
         // Props 'value' and 'onClick' are passing down from Board component.
         // When a Square is clicked, the onClick function provided by Board 
         // is called. Since the Board passed onClick={() => this.handleClick(i)}

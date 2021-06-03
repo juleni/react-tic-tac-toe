@@ -93,6 +93,7 @@ class Game extends React.Component {
     // render currently selected move according to stepNumber
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    
     // For each move in the game history create a list item <li>
     // which contains a button. Button has a onClick() handler which calls 
     // a method this.jumpTo()
@@ -115,7 +116,7 @@ class Game extends React.Component {
 
     let status;
     if (winner) {
-      status = 'Winner: ' + winner;
+      status = 'Winner: ' + winner[0];
     } 
     // Chceck for draw: Find out if there is a 'null' value in the array 
     else if (!current.squares.some(el => el === null)) {
@@ -129,6 +130,9 @@ class Game extends React.Component {
         <div className="game-board">
           <Board 
             squares={ current.squares }
+            // if there is winner, get array of winnner's squares and send
+            // it to the Board component
+            winSquares= { winner ? winner[1] : null }
             onClick={ (i) => this.handleClick(i) }
           />
         </div>
@@ -157,7 +161,7 @@ function calculateWinner(squares) {
   for (let i=0; i<lines.length; i++) {
     const [a,b,c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [squares[a], lines[i]];
     }
   }
   return null;

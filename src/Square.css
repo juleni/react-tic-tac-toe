@@ -1,4 +1,4 @@
-.square {
+.square, .square-selected {
   background: #fff;
   border: 1px solid #999;
   float: left;
@@ -11,6 +11,10 @@
   padding: 0;
   text-align: center;
   width: 34px;
+}
+
+.square-selected {
+  border: 2px solid rgb(18, 230, 75);
 }
 
 .square:focus {
