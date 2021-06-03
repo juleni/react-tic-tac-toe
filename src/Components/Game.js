@@ -57,6 +57,7 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
+
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     // Store the state in the Board component instead of the individual 
     // Square components. When the Board's state changes, the Square components
@@ -115,6 +116,10 @@ class Game extends React.Component {
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
+    } 
+    // Chceck for draw: Find out if there is a 'null' value in the array 
+    else if (!current.squares.some(el => el === null)) {
+      status = 'DRAW';
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
