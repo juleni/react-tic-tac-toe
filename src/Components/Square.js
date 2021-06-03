@@ -13,19 +13,19 @@ function Square(props) {
     // Set state value to X when clicked on the square.
     // Calling setStare in a component, React automatically updates
     // the child components inside of it too.
-    <button 
-      className="square" 
-      // Props 'value' and 'onClick' are passing down from Board component.
-      // When a Square is clicked, the onClick function provided by Board 
-      // is called. Since the Board passed onClick={() => this.handleClick(i)}
-      // to Square, the Square calls this.handleClick(i) when clicked.
+      <button
+        className="square"
+        // Props 'value' and 'onClick' are passing down from Board component.
+        // When a Square is clicked, the onClick function provided by Board 
+        // is called. Since the Board passed onClick={() => this.handleClick(i)}
+        // to Square, the Square calls this.handleClick(i) when clicked.
 
-      // In React, it's conventional to use on[Event] names for methods which
-      // represent events.        
-      onClick={props.onClick}
-    >
-      { props.value }
-    </button>
+        // In React, it's conventional to use on[Event] names for methods which
+        // represent events.
+        onClick={props.onClick}
+      >
+        { props.value }
+      </button>
   );
 }
 

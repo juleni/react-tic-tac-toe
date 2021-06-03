@@ -8,6 +8,7 @@ class Game extends React.Component {
     // All React components classes that have constructor should start 
     // with a super(props) call.
     super(props);
+
     this.state = {
       // Top level Game component stores a list of past moves. This gives 
       // the full control over Board's data, and lets it instruct the Board 
@@ -28,6 +29,19 @@ class Game extends React.Component {
     };
   }
 
+  // Positions X,Y that will be written into the button history
+  static xyPositions = [
+    ['[1, 1]'],
+    ['[2, 1]'],
+    ['[3, 1]'],
+    ['[1, 2]'],
+    ['[2, 2]'],
+    ['[2, 3]'],
+    ['[1, 3]'],
+    ['[2, 3]'],
+    ['[3, 3]'],
+  ];
+
   // function that handles onClick event when Square is clicked on
   handleClick(i) {
     // this ensures if we "go back in time" and then make a new move
@@ -38,6 +52,7 @@ class Game extends React.Component {
     // Slice - create a copy of the array to modify instead of modifying
     // the existing array.
     const squares = current.squares.slice();
+
     // Ignore a click if someone has won the game or if Square is already clicked.
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -48,13 +63,14 @@ class Game extends React.Component {
     // re-render automatically. Keeping the state in the Board component will
     // allow it to determine the winner in the future.
 
-    // The Square components are CONTROLLED COMPONENTS. The Board component 
+    // The Square/Board components are CONTROLLED COMPONENTS. The Game component 
     // has full control over them.
     this.setState({
       // Unlike the push() method, the concat() method doesn't mutate 
       // the original array, so we prefer it.
       history: history.concat([{
         squares: squares,
+        position: Game.xyPositions[i],
       }]),
       // this ensures we don't get stuck showing the same move after a new one
       // has been made
@@ -65,7 +81,7 @@ class Game extends React.Component {
 
   jumpTo(step) {
     this.setState({
-      // stepNumbe state reflects the move displayed to the user.
+      // stepNumber state reflects the move displayed to the user.
       stepNumber: step,
       xIsNext: (step % 2) === 0,
     });
@@ -80,7 +96,10 @@ class Game extends React.Component {
     // which contains a button. Button has a onClick() handler which calls 
     // a method this.jumpTo()
     const moves = history.map((step, move) => {
-      const desc = move ? 'Go to move #' + move : 'Go to game start';
+      const desc = move ? 
+        ('Go to move #' + move + ' at position: ' + history[move].position)
+        : 'Go to game start';
+      
       return (
         <li key={ move }>
           <button onClick={() => this.jumpTo(move)}>{ desc }</button>
